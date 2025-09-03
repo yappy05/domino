@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  rabbitmq:
+    container_name: rabbitmq-ecommerce
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+
+  postgres:
+    container_name: postgres-users
+    image: postgres:latest
+    ports:
+      - 5450:5432
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my-app
+
+volumes:
+  postgres_data:
+
+networks:
+  my-app:

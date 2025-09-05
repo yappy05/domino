@@ -1,3 +1,2 @@
-export * from './lib/auth/jwt';
-export * from './lib/auth/auth'
-export * from './lib/user/user'
+// Re-export shared types for backward compatibility
+export * from '@domino/shared-types';

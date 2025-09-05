@@ -1,10 +1,11 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 import { Response } from 'express';
 import { messages } from 'nx/src/utils/ab-testing';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
+  private readonly logger = new Logger()
   catch(exception: any, host: ArgumentsHost) {
 
     const response = host.switchToHttp().getResponse<Response>();
@@ -32,6 +33,9 @@ export class AllExceptionFilter implements ExceptionFilter {
     }
 
 
+    this.logger.error({
+      exception
+    })
     response.status(500).json({
       httpStatus: 500,
       messages: 'Internal serve error || unhandle error - custom filter handle'

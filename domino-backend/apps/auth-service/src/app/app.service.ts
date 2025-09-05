@@ -1,15 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import {
-  JwtPayload,
-  JwtTokens, LoginDto, LogoutDto,
-  RegisterDto,
-  UserResponse
-} from '@domino-backend/utils';
 import { PrismaService } from '../prisma/prisma.service';
 import { RpcException } from '@nestjs/microservices';
 import { status } from '@grpc/grpc-js';
 import { hash, verify } from 'argon2';
+import { JwtPayload, JwtTokens, LoginDto, LogoutDto, RegisterDto } from '@domino/shared-types';
 
 @Injectable()
 export class AppService {
@@ -34,8 +29,10 @@ export class AppService {
   public async login(dto: LoginDto): Promise<JwtTokens> {
     const {email, password} = dto
     const user = await this.findByEmail(email)
+    if (!user)
+      throw new RpcException({code: status.NOT_FOUND, message: 'неверно введеные данные'})
     const isCorrectPass = await verify(user.password, password)
-    if (!user || !isCorrectPass)
+    if (!isCorrectPass)
       throw new RpcException({code: status.NOT_FOUND, message: 'неверно введеные данные'})
     const tokens = await this.generateTokens({username: user.name, sub: user.id})
     this.updateRefreshTokenInDatabase(user.id, tokens.refreshToken).catch(e => console.log('не удалось обновить refresh токен: ', e))

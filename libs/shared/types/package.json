@@ -1,0 +1,20 @@
+{
+  "name": "@domino/shared-types",
+  "version": "1.0.0",
+  "description": "Shared types for Domino e-commerce project",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  }
+}

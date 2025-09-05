@@ -14,10 +14,11 @@ import {
 import { AppService } from './app.service';
 import { API_CLIENT, AUTH_QUEUE } from '../../shared/constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { LoginDto, RegisterDto } from '@domino-backend/utils';
+
 import {Response} from 'express';
 import { AllExceptionFilter } from './filters/all-exception.filter';
 import { AuthGuard } from '@nestjs/passport';
+import { LoginDto, RegisterDto } from '@domino/shared-types';
 
 
 @Controller()
@@ -33,6 +34,11 @@ export class AppController {
   async getData() {
     this.apiClient.emit('ping', {})
     return this.appService.getData();
+  }
+
+  @Post('test')
+  test() {
+    console.log('test')
   }
 
   @Get('/error')

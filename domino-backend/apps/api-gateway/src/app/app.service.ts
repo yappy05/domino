@@ -1,9 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { JwtTokens, LoginDto, LogoutDto, RegisterDto } from '@domino-backend/utils';
+
 import { API_CLIENT } from '../../shared/constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import {Response} from 'express';
+import { JwtTokens, LoginDto, LogoutDto, RegisterDto } from '@domino/shared-types';
+
+
 
 @Injectable()
 export class AppService {

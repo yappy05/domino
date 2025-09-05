@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { LoginDto, LogoutDto, RegisterDto } from '@domino-backend/utils';
+import { LoginDto, LogoutDto, RegisterDto } from '@domino/shared-types';
 
 @Controller()
 export class AppController {
@@ -9,22 +9,21 @@ export class AppController {
 
   @MessagePattern('ping')
   test() {
-    console.log('pong')
+    console.log('pong');
   }
 
   @MessagePattern('register')
-  async handleAuthRegister (@Payload() dto: RegisterDto) {
-    return await this.appService.register(dto)
+  async handleAuthRegister(@Payload() dto: RegisterDto) {
+    return await this.appService.register(dto);
   }
 
   @MessagePattern('login')
   async handleAuthLogin(@Payload() dto: LoginDto) {
-    return this.appService.login(dto)
+    return this.appService.login(dto);
   }
 
   @MessagePattern('logout')
   handleAuthLogout(@Payload() dto: LogoutDto) {
-    this.appService.logout(dto)
+    this.appService.logout(dto);
   }
-
 }

@@ -18,7 +18,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import {Response} from 'express';
 import { AllExceptionFilter } from './filters/all-exception.filter';
 import { AuthGuard } from '@nestjs/passport';
-import { LoginDto, RegisterDto } from '@domino/shared-types';
+import {} from 'zod-contracts'
 
 
 @Controller()
